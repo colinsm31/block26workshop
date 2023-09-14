@@ -6,9 +6,10 @@ function SelectedContact({selectedContactId, setSelectedContactId}){
   useEffect(() => {
     const response = () => {
       fetch(`https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${selectedContactId}`)
-      
+      setContact(selectedContactId);
     }
   }, [])
+  
 }
 
 export default SelectedContact;
