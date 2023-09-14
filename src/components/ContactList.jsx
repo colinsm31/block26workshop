@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ContactRow from "./ContactRow";
 
 const dummyContacts = [
@@ -7,8 +7,23 @@ const dummyContacts = [
   { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
 ];
 
-function ContactList(){
+function ContactList({setSelectedContactId}){
   const [contacts, setContacts] = useState(dummyContacts);
+
+  useEffect(() => {
+    async function fetchContacts(){
+      try{
+        // Fetch logic goes here
+        const response = await fetch(`https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users`);
+        const result = await response.json();
+        setContacts(result);
+        console.log(contacts);
+      } catch(error){
+        console.error(error);
+      }
+    }
+    fetchContacts();
+  }, [])
 
   console.log("Contacts: ", contacts);
   return(
@@ -19,7 +34,7 @@ function ContactList(){
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr onClick={setSelectedContactId}>
           <td>Name</td>
           <td>Email</td>
           <td>Phone</td>
